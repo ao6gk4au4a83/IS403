@@ -1,14 +1,79 @@
 /* Add CSS Here, use lovely pink */
 
-
 body {
     background-color: #faefe0;
     text-align: center;
+    padding: 20px;
 }
 
 #login-link{
     text-align: right;
 }
+
+/* NAVIGATION BAR */
+    /* Reset some basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navbar styles */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #faefe0;
+    color: #f7bcba;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it stays above other content */
+    flex-direction: column; /* Stack links and brand vertically */
+}
+
+
+.navbar-content {
+    text-align: center;
+}
+
+.navbar-brand {
+    font-size: 2.5em;
+    font-weight: bold;
+    font-family:Georgia, serif;
+}
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    background-color: #faefe0;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
+}
+
+.navbar-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1em;
+    background-color: #f7bcba; 
+    padding: 10px 20px; /* Button padding */
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s;
+    display: inline-block;
+    font-weight: bold; /* Make text bold for better readability */
+}
+
+.navbar-links a:hover {
+    background-color: #f5aeac; /* Darker purple on hover */
+}
+
+/* Add padding to the top of the page content to avoid overlap */
+.content {
+    padding-top: 110px; /* Adjust this based on the height of your navbar */
+}
+
 
 /* the dropdown details menu */
 details {
