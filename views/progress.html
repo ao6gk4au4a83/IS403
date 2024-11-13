@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+
     <title>Haley Esthetics</title>
 </head>
 <body>
-    <h3>login</h3>
+
+
+
+    
+    <a href="login-page.html" id="login-link">Login</a>
     <h1>Haley Esthetics</h1>
+    <div id="odd">
     <!-- add image frame/shape later -->
     <img id="haleyProfile" src="media/Haley.jpg" alt="Haley Carter" width="100"><br>
     <h2>About the Artist</h2>
@@ -16,8 +23,11 @@
         Health/beauty <br>
         Lash Artist & Esthetician <br>
         Youngtown, AZ</p>
-    <img id="EyeExample1" src="media/Eye1.jpg" alt="Lash Example" width="100"><br>
-
+    <a href="artist-info.ejs">More About Me</a>
+    
+    </div>
+    <div id="even">
+        <img id="EyeExample1" src="media/Eye1.jpg" alt="Lash Example" width="100"><br>
     <h2>Services</h2>
     
         <details>
@@ -43,8 +53,11 @@
             <p>I personally use mini fills for last minute events that I didn’t plan for when scheduling my two week fills.</p>
             <p>Mini fill are NOT meant to take place of your regular two week fill. Please book responsibly so that I don’t have to result in taking mini fills off my menu</p>
         </details>
+    </div>
 
+    <div id="odd">
     <h2>Policies</h2>
+    <img id="EyeExample2" src="media/Eye2.jpg" alt="Lash Example" width="100"><br>
         <details>
             <summary>Clean Lashes</summary>
                 <p>Please arrive to your appointment with fresh, clean 
@@ -84,10 +97,56 @@
                     You WILL be charged the full service amount.
                 </p>
         </details>
-
-    <h2>Images</h2>
-    <img id="EyeExample2" src="media/Eye2.jpg" alt="Lash Example" width="100"><br>
+        <details>
+            <summary>Cancellations</summary>
+            <h4>48 Hours</h4>    
+                <p>Cancellations that occur 48 hours before the appointment
+                    time will be charged 45% of the full service amount.<br>
+                    It is impossible for me to book someone else in that time 
+                    slot.
+                </p>
+            <h4>24 Hours</h4> 
+                <p>Cancellations that occur 24 hours before the appointment
+                    time will be charged 60% of the full service amount.<br>
+                    It is impossible for me to book someone else in that time 
+                    slot.</p>
+        </details>
+        <details>
+            <summary>Mini Fills</summary>
+                <p>Mini fills are only available within 8 days of your last fill.
+                </p>
+        </details>
+        <details>
+            <summary>Fills</summary>
+                <p> Fills are to be scheduled every 2-3 weeks. Anything on/after
+                    25 days/3.5 weeks will be considered a full set.<br>
+                    Any fill with less than 40% of lash extensions remaining will
+                    be considered a full set.
+                </p>
+        </details>
+        <p>Thank you for understanding my policies and respecting them. Policies 
+            protect me AND my clients.
+        </p>
+    </div>
+    <div id="even">
+    <h2>Image Gallery</h2>
+        <div class="gallery">
+            <img id="G1" src="media/G1.jpg" alt="Lash Example" class="gallery-img"><br>
+            <img id="G2" src="media/G2.jpg" alt="Lash Example" class="gallery-img"><br>
+            <img id="G3" src="media/G3.jpg" alt="Lash Example" class="gallery-img"><br>
+            <img id="G4" src="media/G4.jpg" alt="Lash Example" class="gallery-img"><br>
+            <img id="G5" src="media/G5.jpg" alt="Lash Example" class="gallery-img"><br>
+        </div>
+        <div class="modal" id="modal">
+            <span class ="close" id="close">&times;</span>
+            <img class="modal-content" id="modal-img">
+        </div>
+    </div>
+    
+    <div>
     <h2>reviews</h2>
-    <h2></h2>
+    </div>
+    
+
 </body>
 </html>

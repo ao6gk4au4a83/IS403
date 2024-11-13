@@ -1,1 +1,89 @@
 /* Add CSS Here, use lovely pink */
+
+
+body {
+    background-color: #faefe0;
+    text-align: center;
+}
+
+#login-link{
+    text-align: right;
+}
+
+/* the dropdown details menu */
+details {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 15px;
+    cursor: pointer;
+    background-color: #f4e4e4;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+/* back ground color blocks*/
+#even {
+    background-color: #faefe0;
+}
+
+#odd {
+    background-color: #f7bcba;
+}
+
+
+
+
+/* Image Gallery */
+.gallery {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.gallery-img {
+    width: 150px;
+    height: auto;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.gallery-img:hover {
+    transform: scale(1.1);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #bbb;
+}
