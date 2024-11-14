@@ -49,8 +49,10 @@ app.get("/", (req, res) =>  // this IS a Route, with an arrow function inside
 
 
 
-
-
+//################################### trying to make the css work ###################################################
+// using app.use to serve up static CSS files in public/assets/ folder when /public link is called in ejs files
+// app.use("/route", express.static("foldername"));
+app.use('views', express.static('views'));
 
 
 app.listen( port, () => console.log("Listening"));
