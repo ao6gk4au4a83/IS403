@@ -1,24 +1,13 @@
-/* Add CSS Here, use lovely pink */
+/* styles.css */
 
+/* General body styling */
 body {
     background-color: #faefe0;
     text-align: center;
     padding: 20px;
 }
 
-#login-link{
-    text-align: right;
-}
-
-/* NAVIGATION BAR */
-    /* Reset some basic styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Navbar styles */
+/* Navigation bar */
 .navbar {
     position: fixed;
     top: 0;
@@ -33,7 +22,6 @@ body {
     flex-direction: column; /* Stack links and brand vertically */
 }
 
-
 .navbar-content {
     text-align: center;
 }
@@ -41,7 +29,7 @@ body {
 .navbar-brand {
     font-size: 2.5em;
     font-weight: bold;
-    font-family:Georgia, serif;
+    font-family: Georgia, serif;
 }
 
 .navbar-links {
@@ -66,16 +54,15 @@ body {
 }
 
 .navbar-links a:hover {
-    background-color: #f5aeac; /* Darker purple on hover */
+    background-color: #f5aeac; /* Darker pink on hover */
 }
 
 /* Add padding to the top of the page content to avoid overlap */
 .content {
-    padding-top: 110px; /* Adjust this based on the height of your navbar */
+    padding-top: 140px; /* Adjust this based on the height of your navbar */
 }
 
-
-/* the dropdown details menu */
+/* Dropdown details menu */
 details {
     font-size: 18px;
     font-weight: bold;
@@ -87,7 +74,7 @@ details {
     transition: background-color 0.3s ease;
 }
 
-/* back ground color blocks*/
+/* Background color blocks */
 #even {
     background-color: #faefe0;
 }
@@ -95,9 +82,6 @@ details {
 #odd {
     background-color: #f7bcba;
 }
-
-
-
 
 /* Image Gallery */
 .gallery {
@@ -151,4 +135,33 @@ details {
 
 .close:hover {
     color: #bbb;
+}
+
+/* Specific Form Styling */
+.vh-100 {
+    height: 100vh;
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container {
+    width: 350px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.btn-custom {
+    background-color: #ff69b4;
+    color: white;
+}
+
+.btn-custom:hover {
+    background-color: #ff85c0;
 }
