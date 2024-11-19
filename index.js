@@ -24,6 +24,10 @@ app.use(express.urlencoded({extended: true})); // get the fata from the forms
 //    = reg.params
 
 
+// SUMMON THE CSS
+app.use(express.static(__dirname + '/views'));
+
+
 const knex = require("knex") ({      // this is our connnection string
     client : "pg",
     connection : {
