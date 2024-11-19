@@ -25,20 +25,30 @@
         }
     });
 
-    function toggleForms() {
-        const loginForm = document.getElementById("loginForm");
-        const signUpForm = document.getElementById("signUpForm");
     
-        if (loginForm.style.display === "none") {
-            loginForm.style.display = "block";
-            signUpForm.style.display = "none";
+    function toggleForm(mode) {
+        const signupFields = document.querySelectorAll('.signup-only');
+        const formTitle = document.getElementById('formTitle');
+        const submitButton = document.getElementById('submitButton');
+        const toggleText = document.getElementById('toggleText');
+        const form = document.getElementById('userForm');
+    
+        if (mode === 'signup') {
+            signupFields.forEach(field => field.style.display = 'block');
+            formTitle.textContent = 'Sign Up';
+            submitButton.textContent = 'Register';
+            form.action = '/signup';  // Change form action to POST /signup
+            form.method = 'POST';     // Change form method to POST
+            toggleText.innerHTML = 'Already have an account? <a href="#" onclick="toggleForm(\'login\')">Login Here</a>';
         } else {
-            loginForm.style.display = "none";
-            signUpForm.style.display = "block";
+            signupFields.forEach(field => field.style.display = 'none');
+            formTitle.textContent = 'Login';
+            submitButton.textContent = 'Login';
+            form.action = '/login';  // Change form action to GET /login
+            form.method = 'GET';     // Change form method to GET
+            toggleText.innerHTML = 'Don\'t have an account? <a href="#" onclick="toggleForm(\'signup\')">Register Here</a>';
         }
     }
     
-
-
 
 
