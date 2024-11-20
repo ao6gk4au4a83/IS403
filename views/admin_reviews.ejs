@@ -36,7 +36,7 @@
         <% reviews.forEach(row => { %>
           <tr>
             <td><%= row.email %></td>
-            <td><%= row.review_date %></td>
+            <td><%= new Date(row.review_date).toLocaleDateString() %></td>
             <td><%= row.rating %></td>
             <td><%= row.comment %></td>
             <td>
