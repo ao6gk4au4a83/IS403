@@ -1,3 +1,4 @@
+// Setup Lines **
 let express = require("express");
 
 let app = express();
@@ -9,6 +10,7 @@ const port = 4500;
 app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname, "views"));
+<<<<<<< Updated upstream
 
 app.get('/login', (req, res) => {
     res.render('login'); // This looks for 'views/login.ejs'
@@ -29,6 +31,14 @@ app.use(express.static(__dirname + '/views'));
 
 
 const knex = require("knex") ({      // this is our connnection string
+=======
+
+// get the data from the forms **
+app.use(express.urlencoded({extended: true})); 
+
+// Connects to database on LOCAL computer **
+const knex = require("knex") ({
+>>>>>>> Stashed changes
     client : "pg",
     connection : {
         host : "localhost",
@@ -39,6 +49,7 @@ const knex = require("knex") ({      // this is our connnection string
     }
 });
 
+<<<<<<< Updated upstream
 
 
 
@@ -49,6 +60,23 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+=======
+// Links to home/index page **
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
+// Links to login page **
+app.get('/login', (req, res) => {
+    res.render('login'); 
+});
+
+// Makes the CSS work **
+app.use(express.static(__dirname + '/views'));
+
+
+// Routes to Login **
+>>>>>>> Stashed changes
 // Handle Login
 app.get('/login', (req, res) => {
     const { email, password } = req.query;
@@ -88,6 +116,7 @@ app.post('/signup', (req, res) => {
     });
 });
 
+<<<<<<< Updated upstream
 
 
 
@@ -97,5 +126,28 @@ app.post('/signup', (req, res) => {
 // app.use("/route", express.static("foldername"));
 app.use('views', express.static('views'));
 
+=======
+// Admin Routes **
+// Route to display user records page
+app.get('/admin', (req, res) => {
+    knex('users')
+      .join('login', 'users.email', '=', 'login.email')
+      .select(
+        'users.email',
+        'login.password',
+        'users.first_name',
+        'users.last_name',
+        'users.phone',
+      )
+      .then(users => {
+        // Render the admin.ejs user record template and pass the data
+        res.render('admin', { users });
+      })
+      .catch(error => {
+        console.error('Error querying database:', error);
+        res.status(500).send('Internal Server Error');
+      });
+  });
+>>>>>>> Stashed changes
 
 app.listen( port, () => console.log("Listening"));
