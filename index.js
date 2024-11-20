@@ -1,3 +1,4 @@
+// Setup Stuff **
 let express = require("express");
 const { userInfo } = require("os");
 let app = express();
@@ -5,25 +6,12 @@ let path = require("path");
 const port = 4500;
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-<<<<<<< Updated upstream
-app.use(express.urlencoded({extended: true})); // get the data from the forms
-=======
 
-app.get('/login', (req, res) => {
-    res.render('login'); // This looks for 'views/login.ejs'
-});
+// Get data from forms **
+app.use(express.urlencoded({extended: true}));
 
-app.get('/admin', (req, res) => {
-    res.render('admin'); // This looks for 'views/login.ejs'
-});
-
-app.use(express.urlencoded({extended: true})); // get the fata from the forms
->>>>>>> Stashed changes
-// post = erq.body
-//get  = req.query
-//    = reg.params
-
-const knex = require("knex") ({      // this is our connnection string
+// Connection to LOCAL database
+const knex = require("knex") ({      
     client : "pg",
     connection : {
         host : "localhost",
@@ -34,62 +22,20 @@ const knex = require("knex") ({      // this is our connnection string
     }
 });
 
- app.get('/login', (req, res) => {
-    res.render('login'); // This looks for 'views/login.ejs'
-});
-
-
-
-
-
-
-// SUMMON THE CSS
-app.use(express.static(__dirname + '/views'));
-
-
-<<<<<<< Updated upstream
-
-=======
-const knex = require("knex") ({      // this is our connnection string
-    client : "pg",
-    connection : {
-        host : "localhost",
-        user : "postgres",
-        password : "admin",
-        database : "assignment3",
-        port : 5432
-    }
-});
->>>>>>> Stashed changes
-
-
-
-
-// ########################### THIS IS FROM THE POKEMON ASSIGNMENT 3 ########################
-// My ROUTE
-// this is a route URL
-app.get('/', (req, res) => {
-    res.render('index');
-});
-
-<<<<<<< Updated upstream
-=======
-// Links to home/index page **
+// Routes naviagting to pages **
+// Home/Index  page
 app.get('/', (req, res) => {
   res.render('index');
 });
-
-// Links to login page **
+// Login page ##### Do we need this and like 40?
 app.get('/login', (req, res) => {
-    res.render('login'); 
+  res.render('login'); 
 });
 
-// Makes the CSS work **
+// Allow CSS **
 app.use(express.static(__dirname + '/views'));
 
-
-// Routes to Login **
->>>>>>> Stashed changes
+// ROUTES FOR LOGIN PAGE
 // Handle Login
 app.get('/login', (req, res) => {
     const { email, password } = req.query;
@@ -130,17 +76,8 @@ app.post('/signup', (req, res) => {
 });
 
 
-
-
-
-//################################### trying to make the css work ###################################################
-// using app.use to serve up static CSS files in public/assets/ folder when /public link is called in ejs files
-// app.use("/route", express.static("foldername"));
-app.use('views', express.static('views'));
-
-<<<<<<< Updated upstream
-// Admin Routes
-// Route to display user records
+// ROUTES FOR ADMIN PAGE(S) **
+// Route to display user record page
 app.get('/admin', (req, res) => {
     knex('users')
       .join('login', 'users.email', '=', 'login.email')
@@ -160,8 +97,6 @@ app.get('/admin', (req, res) => {
         res.status(500).send('Internal Server Error');
       });
   });
-=======
->>>>>>> Stashed changes
 
   // Route to edit the individual users
   app.get('/editUser/:email', (req, res) => {
