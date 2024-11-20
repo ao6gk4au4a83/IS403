@@ -27,10 +27,6 @@ const knex = require("knex") ({
 app.get('/', (req, res) => {
   res.render('index');
 });
-// Login page ##### Do we need this and like 40?
-app.get('/login', (req, res) => {
-  res.render('login'); 
-});
 
 // Allow CSS **
 app.use(express.static(__dirname + '/views'));
@@ -112,7 +108,7 @@ app.get('/admin', (req, res) => {
         // Query all info after fetching the user
         knex('users')
           .select('email', 'first_name', 'last_name', 'phone')
-          .then(userInfo => {
+          .then(user => {
             // Render the edit form and pass both user and login
             res.render('editUser', { login, user });
           })
@@ -143,7 +139,7 @@ app.get('/admin', (req, res) => {
         phone: phone,
       })
       .then(() => {
-        res.redirect('/'); // Redirect to the list of users after saving
+        res.redirect('/'); // probably not right....
       })
       .catch(error => {
         console.error('Error updating user:', error);
