@@ -25,9 +25,7 @@ const knex = require("knex") ({      // this is our connnection string
     res.render('login'); // This looks for 'views/login.ejs'
 });
 
-app.get('/admin', (req, res) => {
-    res.render('admin'); // This looks for 'views/login.ejs'
-});
+
 
 
 
@@ -109,7 +107,7 @@ app.get('/admin', (req, res) => {
         'users.phone',
       )
       .then(users => {
-        // Render the index.ejs template and pass the data
+        // Render the admin.ejs user record template and pass the data
         res.render('admin', { users });
       })
       .catch(error => {
@@ -118,9 +116,10 @@ app.get('/admin', (req, res) => {
       });
   });
 
+  // Route to edit the individual users
   app.get('/editUser/:email', (req, res) => {
     let email = req.params.email;
-    // Query the Pokémon by ID first
+    // Query the users by email first
     knex('login')
       .where('email', email)
       .first() // takes the single object in the array into an object without the array
@@ -128,12 +127,12 @@ app.get('/admin', (req, res) => {
         if (!user) {
           return res.status(404).send('User not found');
         }
-        // Query all info types after fetching the user
+        // Query all info after fetching the user
         knex('users')
           .select('email', 'first_name', 'last_name', 'phone')
           .then(userInfo => {
             // Render the edit form and pass both user and login
-            res.render('editUser', { login, usersSum });
+            res.render('editUser', { login, user });
           })
           .catch(error => {
             console.error('Error fetching user info:', error);
@@ -146,13 +145,14 @@ app.get('/admin', (req, res) => {
       });
   });
   
+  // Route to post data back to the database
   app.post('/editUser/:email', (req, res) => {
     const email = req.params.email;
     // Access each value directly from req.body
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
     const phone = req.body.phone; 
-    // Update the Pokémon in the database
+    // Update the user in the database
     knex('users')
       .where('email', email)
       .update({
@@ -161,7 +161,7 @@ app.get('/admin', (req, res) => {
         phone: phone,
       })
       .then(() => {
-        res.redirect('/'); // Redirect to the list of Pokémon after saving
+        res.redirect('/'); // Redirect to the list of users after saving
       })
       .catch(error => {
         console.error('Error updating user:', error);
@@ -169,13 +169,14 @@ app.get('/admin', (req, res) => {
       });
   });
   
+  // Route to delete user accounts
   app.post('/deleteUser/:email', (req, res) => {
     const email = req.params.email;
     knex('users')
       .where('email', email)
-      .del() // Deletes the record with the specified ID
+      .del() // Deletes the record with the specified email
       .then(() => {
-        res.redirect('/'); // Redirect to the Pokémon list after deletion
+        res.redirect('/'); // Redirect to the user list after deletion
       })
       .catch(error => {
         console.error('Error deleting user:', error);
