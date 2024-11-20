@@ -166,7 +166,94 @@ app.get('/admin', (req, res) => {
       });
   });
 
+// Route to display review record page
+app.get('/admin_reviews', (req, res) => {
+  knex('users')
+    .join('reviews', 'users.email', '=', 'reviews.user_email')
+    .select(
+      'reviews.id',
+      'users.email',
+      'reviews.review_date',
+      'reviews.rating',
+      'reviews.comment',
+    )
+    .then(reviews => {
+      // Render the admin_reviews.ejs review record template and pass the data
+      res.render('admin_reviews', { reviews });
+    })
+    .catch(error => {
+      console.error('Error querying database:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
 
+// Route to edit the individual users
+// app.get('/editUser/:email', (req, res) => {
+//   let email = req.params.email;
+//   // Query the users by email first
+//   knex('login')
+//     .where('email', email)
+//     .first() // takes the single object in the array into an object without the array
+//     .then(user => {
+//       if (!user) {
+//         return res.status(404).send('User not found');
+//       }
+//       // Query all info after fetching the user
+//       knex('users')
+//         .select('email', 'first_name', 'last_name', 'phone')
+//         .then(userInfo => {
+//           // Render the edit form and pass both user and login
+//           res.render('editUser', { login, user });
+//         })
+//         .catch(error => {
+//           console.error('Error fetching user info:', error);
+//           res.status(500).send('Internal Server Error');
+//         });
+//     })
+//     .catch(error => {
+//       console.error('Error fetching user for editing:', error);
+//       res.status(500).send('Internal Server Error');
+//     });
+// });
+
+// // Route to post data back to the database
+// app.post('/editUser/:email', (req, res) => {
+//   const email = req.params.email;
+//   // Access each value directly from req.body
+//   const first_name = req.body.first_name;
+//   const last_name = req.body.last_name;
+//   const phone = req.body.phone; 
+//   // Update the user in the database
+//   knex('users')
+//     .where('email', email)
+//     .update({
+//       first_name: first_name,
+//       last_name: last_name,
+//       phone: phone,
+//     })
+//     .then(() => {
+//       res.redirect('/'); // Redirect to the list of users after saving
+//     })
+//     .catch(error => {
+//       console.error('Error updating user:', error);
+//       res.status(500).send('Internal Server Error');
+//     });
+// });
+
+// // Route to delete user accounts
+// app.post('/deleteUser/:email', (req, res) => {
+//   const email = req.params.email;
+//   knex('users')
+//     .where('email', email)
+//     .del() // Deletes the record with the specified email
+//     .then(() => {
+//       res.redirect('/'); // Redirect to the user list after deletion
+//     })
+//     .catch(error => {
+//       console.error('Error deleting user:', error);
+//       res.status(500).send('Internal Server Error');
+//     });
+// });
 
 
 // DON'T PUT ANYTHING AFTER THIS!
