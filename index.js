@@ -1,9 +1,9 @@
 // Setup Stuff **
 let express = require("express");
-const { userInfo } = require("os");
+const { user } = require("os");
 let app = express();
 let path = require("path");
-const port = 4500;
+const port = process.env.PORT || 4500;
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -14,11 +14,11 @@ app.use(express.urlencoded({extended: true}));
 const knex = require("knex") ({      
     client : "pg",
     connection : {
-        host : "localhost",
-        user : "postgres",
-        password : "admin",
-        database : "403Project",
-        port : 5432
+      host : process.env.DB_HOST,
+      user : process.env.DB_USER,
+      password : process.env.DB_PASSWORD,
+      database : process.env.DB_NAME,
+      port : process.env.DB_PORT || 5432,
     }
 });
 
