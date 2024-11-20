@@ -5,7 +5,20 @@ let path = require("path");
 const port = 4500;
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+<<<<<<< Updated upstream
 app.use(express.urlencoded({extended: true})); // get the data from the forms
+=======
+
+app.get('/login', (req, res) => {
+    res.render('login'); // This looks for 'views/login.ejs'
+});
+
+app.get('/admin', (req, res) => {
+    res.render('admin'); // This looks for 'views/login.ejs'
+});
+
+app.use(express.urlencoded({extended: true})); // get the fata from the forms
+>>>>>>> Stashed changes
 // post = erq.body
 //get  = req.query
 //    = reg.params
@@ -34,7 +47,20 @@ const knex = require("knex") ({      // this is our connnection string
 app.use(express.static(__dirname + '/views'));
 
 
+<<<<<<< Updated upstream
 
+=======
+const knex = require("knex") ({      // this is our connnection string
+    client : "pg",
+    connection : {
+        host : "localhost",
+        user : "postgres",
+        password : "admin",
+        database : "assignment3",
+        port : 5432
+    }
+});
+>>>>>>> Stashed changes
 
 
 
@@ -46,6 +72,24 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+<<<<<<< Updated upstream
+=======
+// Links to home/index page **
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
+// Links to login page **
+app.get('/login', (req, res) => {
+    res.render('login'); 
+});
+
+// Makes the CSS work **
+app.use(express.static(__dirname + '/views'));
+
+
+// Routes to Login **
+>>>>>>> Stashed changes
 // Handle Login
 app.get('/login', (req, res) => {
     const { email, password } = req.query;
@@ -94,6 +138,7 @@ app.post('/signup', (req, res) => {
 // app.use("/route", express.static("foldername"));
 app.use('views', express.static('views'));
 
+<<<<<<< Updated upstream
 // Admin Routes
 // Route to display user records
 app.get('/admin', (req, res) => {
@@ -115,6 +160,8 @@ app.get('/admin', (req, res) => {
         res.status(500).send('Internal Server Error');
       });
   });
+=======
+>>>>>>> Stashed changes
 
   // Route to edit the individual users
   app.get('/editUser/:email', (req, res) => {
