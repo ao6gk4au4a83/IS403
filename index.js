@@ -10,7 +10,6 @@ const port = 4500;
 app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname, "views"));
-<<<<<<< Updated upstream
 
 app.get('/login', (req, res) => {
     res.render('login'); // This looks for 'views/login.ejs'
@@ -31,14 +30,6 @@ app.use(express.static(__dirname + '/views'));
 
 
 const knex = require("knex") ({      // this is our connnection string
-=======
-
-// get the data from the forms **
-app.use(express.urlencoded({extended: true})); 
-
-// Connects to database on LOCAL computer **
-const knex = require("knex") ({
->>>>>>> Stashed changes
     client : "pg",
     connection : {
         host : "localhost",
@@ -49,7 +40,6 @@ const knex = require("knex") ({
     }
 });
 
-<<<<<<< Updated upstream
 
 
 
@@ -60,23 +50,6 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-=======
-// Links to home/index page **
-app.get('/', (req, res) => {
-  res.render('index');
-});
-
-// Links to login page **
-app.get('/login', (req, res) => {
-    res.render('login'); 
-});
-
-// Makes the CSS work **
-app.use(express.static(__dirname + '/views'));
-
-
-// Routes to Login **
->>>>>>> Stashed changes
 // Handle Login
 app.get('/login', (req, res) => {
     const { email, password } = req.query;
@@ -116,17 +89,6 @@ app.post('/signup', (req, res) => {
     });
 });
 
-<<<<<<< Updated upstream
-
-
-
-
-//################################### trying to make the css work ###################################################
-// using app.use to serve up static CSS files in public/assets/ folder when /public link is called in ejs files
-// app.use("/route", express.static("foldername"));
-app.use('views', express.static('views'));
-
-=======
 // Admin Routes **
 // Route to display user records page
 app.get('/admin', (req, res) => {
@@ -148,6 +110,5 @@ app.get('/admin', (req, res) => {
         res.status(500).send('Internal Server Error');
       });
   });
->>>>>>> Stashed changes
 
 app.listen( port, () => console.log("Listening"));
