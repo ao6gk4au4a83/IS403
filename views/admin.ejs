@@ -54,10 +54,7 @@
             <td><%= row.last_name %></td>
             <td><%= row.phone %></td>
             <td>
-              <!-- Buttons to View, Edit, & Delete individual records -->
-              <form action="/users/<%= row.email %>" method="GET" style="display:inline;">
-                <button type="submit">View</button>
-              </form>
+              <!-- Buttons to Edit, & Delete individual records -->
               <form action="/editUser/<%= row.email %>" method="GET" style="display:inline;">
                 <button type="submit">Edit</button>
               </form>
@@ -74,5 +71,7 @@
       <% } %>
     </tbody>
   </table>
+  <form action="/addUser" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
+    <button type="submit">Add</button>
 </body>
 </html>

@@ -173,6 +173,39 @@ app.post('/deleteUser/:email', (req, res) => {
       });
 });
 
+// Route to add user account
+app.get('/addUser', (req, res) => {
+  res.render('addUser')
+});  
+
+// Route to save new user to database
+app.post('/addUser', (req, res) => {
+  const { email, password, first_name, last_name, phone } = req.body;
+
+  // Use Knex transaction
+  knex.transaction(trx => {
+      // Insert into login table
+      return trx('login')
+          .insert({ email, password })
+          .then(() => {
+              // Insert into users table
+              return trx('users').insert({ email, first_name, last_name, phone });
+          });
+  })
+  .then(() => {
+      // Success: Redirect to admin page or any other appropriate page
+      res.redirect('/admin');
+  })
+  .catch(error => {
+      // Error handling: Rollback is automatic if anything fails within the transaction
+      console.error('Error adding user with transaction:', error);
+      res.status(500).send('Error adding user');
+  });
+});
+
+  
+
+
 // Route to display review record page
 app.get('/admin_reviews', (req, res) => {
   knex('users')
