@@ -74,6 +74,7 @@ app.post('/signup', (req, res) => {
 
 
 // ROUTES FOR ADMIN PAGE(S) **
+// DISPAY USERS
 // Route for search bar
 app.get('/search', async (req, res) => {
   const query = req.query.query;
@@ -112,6 +113,7 @@ app.get('/admin', (req, res) => {
       });
   });
 
+// EDIT USERS
 // Route to edit the individual users
 app.get('/editUser/:email', (req, res) => {
     let email = req.params.email;
@@ -158,6 +160,7 @@ app.post('/editUser/:email', (req, res) => {
       });
 });
   
+// DELETE USERS
 // Route to delete user accounts
 app.post('/deleteUser/:email', (req, res) => {
     const email = req.params.email;
@@ -173,6 +176,7 @@ app.post('/deleteUser/:email', (req, res) => {
       });
 });
 
+// ADD USERS
 // Route to add user account
 app.get('/addUser', (req, res) => {
   res.render('addUser')
@@ -203,9 +207,7 @@ app.post('/addUser', (req, res) => {
   });
 });
 
-  
-
-
+// DISPLAY REVIEWS 
 // Route to display review record page
 app.get('/admin_reviews', (req, res) => {
   knex('users')
@@ -227,28 +229,20 @@ app.get('/admin_reviews', (req, res) => {
     });
 });
 
-// Route to edit the individual users
-app.get('/editUser/:email', (req, res) => {
-  let email = req.params.email;
+// EDIT REVIEWS
+// Route to edit the individual reviews
+app.get('/editReview/:id', (req, res) => {
+  let id = req.params.id;
   // Query the users by email first
-  knex('login')
-    .where('email', email)
+  knex('reviews')
+    .where('id', id)
     .first() // takes the single object in the array into an object without the array
-    .then(user => {
-      if (!user) {
-        return res.status(404).send('User not found');
+    .then(review => {
+      if (!review) {
+        return res.status(404).send('Review not found');
       }
-      // Query all info after fetching the user
-      knex('users')
-        .select('email', 'first_name', 'last_name', 'phone')
-        .then(userInfo => {
-          // Render the edit form and pass both user and login
-          res.render('editUser', { login, user });
-        })
-        .catch(error => {
-          console.error('Error fetching user info:', error);
-          res.status(500).send('Internal Server Error');
-        });
+      res.render('editReview', { review });
+      
     })
     .catch(error => {
       console.error('Error fetching user for editing:', error);
@@ -257,37 +251,37 @@ app.get('/editUser/:email', (req, res) => {
 });
 
 // // Route to post data back to the database
-app.post('/editUser/:email', (req, res) => {
-  const email = req.params.email;
+app.post('/editReview/:id', (req, res) => {
+  const id = req.params.id;
   // Access each value directly from req.body
-  const first_name = req.body.first_name;
-  const last_name = req.body.last_name;
-  const phone = req.body.phone; 
+  const user_email = req.body.user_email;
+  const comment = req.body.comment;
+  const rating = req.body.rating; 
   // Update the user in the database
-  knex('users')
-    .where('email', email)
+  knex('reviews')
+    .where('id', id)
     .update({
-      first_name: first_name,
-      last_name: last_name,
-      phone: phone,
+      comment: comment,
+      rating: rating,
     })
     .then(() => {
-      res.redirect('/'); // Redirect to the list of users after saving
+      res.redirect('/admin_reviews'); // Redirect to the list of reviews after saving
     })
     .catch(error => {
-      console.error('Error updating user:', error);
+      console.error('Error updating review:', error);
       res.status(500).send('Internal Server Error');
     });
 });
 
-// // Route to delete user accounts
-app.post('/deleteUser/:email', (req, res) => {
-  const email = req.params.email;
-  knex('users')
-    .where('email', email)
+// DELETE REVIEWS
+// Route to delete user accounts
+app.post('/deleteReview/:id', (req, res) => {
+  const id = req.params.id;
+  knex('reviews')
+    .where('id', id)
     .del() // Deletes the record with the specified email
     .then(() => {
-      res.redirect('/'); // Redirect to the user list after deletion
+      res.redirect('/admin_reviews'); // Redirect to the user list after deletion
     })
     .catch(error => {
       console.error('Error deleting user:', error);
@@ -295,6 +289,7 @@ app.post('/deleteUser/:email', (req, res) => {
     });
 });
 
+// ADD REVIEWS??
 
 // DON'T PUT ANYTHING AFTER THIS!
 app.listen( port, () => console.log("Listening"));

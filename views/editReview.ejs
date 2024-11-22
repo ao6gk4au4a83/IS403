@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet" type="text/css">
+    <title>Edit User</title>
+</head>
+<body>
+<!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="navbar-brand">Haley Esthetics</div>    
+    <ul class="navbar-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/admin">Admin Users</a></li>
+        <li><a href="/admin_reviews">Admin Reviews</a></li>
+    </ul>
+  </nav>
+  <br><br><br><br><br><br>
+
+<!-- Admin Page Title -->
+  <h1 style="text-align: center">Administration Page</h1>
+  <h2 style="text-align: center;">Edit Reviews</h2>
+  
+  <!-- Editing Form -->
+  <form action="/editReview" method="POST">
+    <!-- Hidden ID Field -->
+    <input type="hidden" name="id" value="<%= review.id %>">
+
+    <!-- Email Field (Read-only) -->
+    <label for="user_email">User Email:</label>
+    <input type="text" name="user_email" value="<%= review.user_email %>" readonly><br><br>
+
+    <!-- Review Date (Read-only) -->
+    <label for="review_date">Review Date:</label>
+    <input type="text" name="review_date" value="<%= review.review_date.toISOString().split('T')[0] %>" readonly><br><br>
+
+    <!-- Comment -->
+    <label for="comment">Comment:</label>
+    <textarea name="comment" rows="4" cols="50"><%= review.comment %></textarea><br><br>
+
+    <!-- Rating Dropdown -->
+    <label for="rating">Rating:</label>
+    <select name="rating" id="rating">
+        <% for (let i = 1; i <= 5; i++) { %>
+            <option value="<%= i %>" <%= review.rating === i ? 'selected' : '' %>><%= i %></option>
+        <% } %>
+    </select><br><br>
+
+    <button type="submit">Save Changes</button>
+</form>
+</body>
+</html>
