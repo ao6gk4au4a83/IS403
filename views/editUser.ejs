@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Edit Users</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet" type="text/css">
+    <title>Edit User</title>
 </head>
 <body>
 <!-- Navigation Bar -->
@@ -17,22 +20,22 @@
 
 <!-- Admin Page Title -->
   <h1 style="text-align: center">Administration Page</h1>
-  <h1 style="text-align: center;">Edit Users</h1>
-  <form action="/editUser/<%= users.email %>" method="POST">
-    <!-- User Email -->
-    <label for="email">Email</label>
-    <input type="text" id="email" name="email" value="<%= users.email %>" required>
+  <h2 style="text-align: center;">Edit User</h2>
+  <form action="/editUser/<%= user.email %>" method="POST">
     <!-- First Name -->
-    <label for="first_name">First Name</label>
-    <input type="text" id="first_name" name="first_name" value="<%= users.first_name %>" required>
+    <label for="first_name">First Name:</label>
+    <input type="text" id="first_name" name="first_name" value="<%= user.first_name %>"><br>
+    
     <!-- Last Name -->
-    <label for="last_name">Last Name</label>
-    <input type="text" id="last_name" name="last_name" value="<%= users.last_name%>" required>
+    <label for="last_name">Last Name:</label>
+    <input type="text" id="last_name" name="last_name" value="<%= user.last_name%>"><br>
+    
     <!-- Phone Number -->
-     <label for="phone">Phone</label>
-     <input type="text" id="phone" name="phone" value="<%= users.phone %>" required>
-    <!-- Submit Button -->
-    <button type="submit">Save Changes</button>
+     <label for="phone">Phone:</label>
+     <input type="text" id="phone" name="phone" value="<%= user.phone %>"><br>
+    
+     <!-- Submit Button -->
+    <button type="submit">Update</button>
   </form>
 </body>
 </html>

@@ -9,6 +9,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // Get data from forms **
 app.use(express.urlencoded({extended: true}));
+app.use(express.json()); // from Chat "to parse JSON data"
 
 // Connection to LOCAL database
 const knex = require("knex") ({      
@@ -111,37 +112,30 @@ app.get('/admin', (req, res) => {
       });
   });
 
-  // Route to edit the individual users
-  app.get('/editUser/:email', (req, res) => {
+// Route to edit the individual users
+app.get('/editUser/:email', (req, res) => {
     let email = req.params.email;
-    // Query the users by email first
-    knex('login')
+    // Query all info after fetching the user
+    knex('users')
+      .select('email', 'first_name', 'last_name', 'phone')
       .where('email', email)
-      .first() // takes the single object in the array into an object without the array
+      .first()
       .then(user => {
-        if (!user) {
-          return res.status(404).send('User not found');
+        if (!user){
+          return res.status(404).send('User not found')
         }
-        // Query all info after fetching the user
-        knex('users')
-          .select('email', 'first_name', 'last_name', 'phone')
-          .then(user => {
-            // Render the edit form and pass both user and login
-            res.render('editUser', { login, user });
-          })
-          .catch(error => {
-            console.error('Error fetching user info:', error);
-            res.status(500).send('Internal Server Error');
-          });
-      })
+        // Render the edit form and pass both user and login
+        res.render('editUser', { user });
+        })
+          
       .catch(error => {
-        console.error('Error fetching user for editing:', error);
+        console.error('Error fetching user info:', error);
         res.status(500).send('Internal Server Error');
-      });
-  });
+        });
+    });
   
-  // Route to post data back to the database
-  app.post('/editUser/:email', (req, res) => {
+// Route to post edits data back to the database
+app.post('/editUser/:email', (req, res) => {
     const email = req.params.email;
     // Access each value directly from req.body
     const first_name = req.body.first_name;
@@ -156,16 +150,16 @@ app.get('/admin', (req, res) => {
         phone: phone,
       })
       .then(() => {
-        res.redirect('/'); // probably not right....
+        res.redirect('/admin'); 
       })
       .catch(error => {
         console.error('Error updating user:', error);
         res.status(500).send('Internal Server Error');
       });
-  });
+});
   
-  // Route to delete user accounts
-  app.post('/deleteUser/:email', (req, res) => {
+// Route to delete user accounts
+app.post('/deleteUser/:email', (req, res) => {
     const email = req.params.email;
     knex('users')
       .where('email', email)
@@ -177,7 +171,7 @@ app.get('/admin', (req, res) => {
         console.error('Error deleting user:', error);
         res.status(500).send('Internal Server Error');
       });
-  });
+});
 
 // Route to display review record page
 app.get('/admin_reviews', (req, res) => {
