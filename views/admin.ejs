@@ -16,8 +16,21 @@
     </ul>
   </nav>
   <br><br><br><br><br><br>
+
 <!-- Admin Page Title -->
   <h1 style="text-align: center">Administration Page</h1>
+
+<!-- Search Bar -->
+  <form action="/search" method="GET" style="margin-bottom: 20px;">
+    <input type="text" name="query" placeholder="Search by name..." style="padding: 5px; width: 300px;">
+    <button type="submit" style="padding: 5px;">Search</button>
+  </form>
+
+<!-- Show all records -->
+  <form action="/admin" method="GET" style="margin-bottom: 20px;">
+    <button type="submit" style="padding: 5px;">Show All Records</button>
+  </form>
+
 <!-- Table Showing User Records -->
   <h2 style="text-align: left;">User Records</h2>
   <table>

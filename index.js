@@ -14,11 +14,11 @@ app.use(express.urlencoded({extended: true}));
 const knex = require("knex") ({      
     client : "pg",
     connection : {
-      host : process.env.DB_HOST,
-      user : process.env.DB_USER,
-      password : process.env.DB_PASSWORD,
-      database : process.env.DB_NAME,
-      port : process.env.DB_PORT || 5432,
+      host : "localhost",
+      user : "postgres",
+      password : "admin",
+      database : "403Project",
+      port : 5432,
     }
 });
 
@@ -73,6 +73,23 @@ app.post('/signup', (req, res) => {
 
 
 // ROUTES FOR ADMIN PAGE(S) **
+// Route for search bar
+app.get('/search', async (req, res) => {
+  const query = req.query.query;
+  try {
+      // Use Knex to fetch users where first_name or last_name matches the query
+      const users = await knex('users')
+          .where('first_name', 'ILIKE', `%${query}%`) // Case-insensitive match
+          .orWhere('last_name', 'ILIKE', `%${query}%`);
+
+      // Render the admin page and pass the matching users
+      res.render('admin', { users });
+  } catch (error) {
+      console.error('Error executing search query:', error);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
 // Route to display user record page
 app.get('/admin', (req, res) => {
     knex('users')
