@@ -158,7 +158,7 @@ app.post('/editUser/:email', (req, res) => {
       })
       .catch(error => {
         console.error('Error updating user:', error);
-        res.status(500).send('Internal Server Error 3');
+        res.status(500).send('Internal Server Error 4');
       });
 });
   
@@ -174,7 +174,7 @@ app.post('/deleteUser/:email', (req, res) => {
       })
       .catch(error => {
         console.error('Error deleting user:', error);
-        res.status(500).send('Internal Server Error 4');
+        res.status(500).send('Internal Server Error 5');
       });
 });
 
@@ -227,7 +227,7 @@ app.get('/admin_reviews', (req, res) => {
     })
     .catch(error => {
       console.error('Error querying database:', error);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send('Internal Server Error 6');
     });
 });
 
@@ -248,7 +248,7 @@ app.get('/editReview/:id', (req, res) => {
     })
     .catch(error => {
       console.error('Error fetching user for editing:', error);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send('Internal Server Error 7');
     });
 });
 
@@ -271,7 +271,7 @@ app.post('/editReview/:id', (req, res) => {
     })
     .catch(error => {
       console.error('Error updating review:', error);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send('Internal Server Error 8');
     });
 });
 
@@ -287,7 +287,7 @@ app.post('/deleteReview/:id', (req, res) => {
     })
     .catch(error => {
       console.error('Error deleting user:', error);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send('Internal Server Error 9');
     });
 });
 
