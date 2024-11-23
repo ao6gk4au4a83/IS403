@@ -15,11 +15,11 @@ app.use(express.json()); // from Chat "to parse JSON data"
 const knex = require("knex") ({      
     client : "pg",
     connection : {
-      host : "localhost",
-      user : "postgres",
-      password : "admin",
-      database : "403Project",
-      port : 5432,
+      host : process.env.RDS_HOSTNAME || "localhost",
+      user : process.env.RDS_USERNAME || "postgres",
+      password : process.env.RDS_PASSWORD || "admin",
+      database : process.env.RDS_DB_NAME || "403Project",
+      port : process.env.RDS_PORT || 5432
     }
 });
 
