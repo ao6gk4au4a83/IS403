@@ -90,7 +90,7 @@ app.get('/search', async (req, res) => {
       res.render('admin', { users });
   } catch (error) {
       console.error('Error executing search query:', error);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send('Internal Server Error 1');
   }
 });
 
@@ -111,7 +111,7 @@ app.get('/admin', (req, res) => {
       })
       .catch(error => {
         console.error('Error querying database:', error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send('Internal Server Error 2');
       });
   });
 
@@ -134,7 +134,7 @@ app.get('/editUser/:email', (req, res) => {
           
       .catch(error => {
         console.error('Error fetching user info:', error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send('Internal Server Error 3');
         });
     });
   
@@ -158,7 +158,7 @@ app.post('/editUser/:email', (req, res) => {
       })
       .catch(error => {
         console.error('Error updating user:', error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send('Internal Server Error 3');
       });
 });
   
@@ -174,7 +174,7 @@ app.post('/deleteUser/:email', (req, res) => {
       })
       .catch(error => {
         console.error('Error deleting user:', error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send('Internal Server Error 4');
       });
 });
 
