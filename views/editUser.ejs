@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet" type="text/css">
+    <title>Edit User</title>
+</head>
+<body>
+<!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="navbar-brand">Haley Esthetics</div>    
+    <ul class="navbar-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/admin">Admin Users</a></li>
+        <li><a href="/admin_reviews">Admin Reviews</a></li>
+    </ul>
+  </nav>
+  <br><br><br><br><br><br>
+
+<!-- Admin Page Title -->
+  <h1 style="text-align: center">Administration Page</h1>
+  <h2 style="text-align: center;">Edit User</h2>
+  <form action="/editUser/<%= user.email %>" method="POST">
+    <!-- First Name -->
+    <label for="first_name">First Name:</label>
+    <input type="text" id="first_name" name="first_name" value="<%= user.first_name %>"><br>
+    
+    <!-- Last Name -->
+    <label for="last_name">Last Name:</label>
+    <input type="text" id="last_name" name="last_name" value="<%= user.last_name%>"><br>
+    
+    <!-- Phone Number -->
+     <label for="phone">Phone:</label>
+     <input type="text" id="phone" name="phone" value="<%= user.phone %>"><br>
+    
+     <!-- Submit Button -->
+    <button type="submit">Update</button>
+  </form>
+</body>
+</html>

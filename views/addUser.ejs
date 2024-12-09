@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet" type="text/css">
+    <title>Add User</title>
+</head>
+<body>
+    <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="navbar-brand">Haley Esthetics</div>    
+    <ul class="navbar-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/admin">Admin Users</a></li>
+        <li><a href="/admin_reviews">Admin Reviews</a></li>
+    </ul>
+  </nav>
+  <br><br><br><br><br><br>
+
+    <!-- Admin Page Title -->
+    <h1 style="text-align: center">Administration Page</h1>
+    <h2 style="text-align: center;">Add User</h2>
+    <form action="/addUser" method="POST">
+        <!-- Email -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+    
+        <!-- Password -->
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+    
+        <!-- First Name -->
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" required><br><br>
+    
+        <!-- Last Name -->
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" required><br><br>
+    
+        <!-- Phone -->
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone"><br><br>
+    
+        <!-- Submit Button -->
+        <button type="submit">Add User</button>
+    </form>
+    
+</body>
+</html>
+
+
+
+
+
+
+
