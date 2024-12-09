@@ -74,7 +74,6 @@ app.post('/signup', (req, res) => {
     });
 });
 
-
 // ROUTES FOR ADMIN PAGE(S) **
 // DISPAY USERS
 // Route for search bar
@@ -292,6 +291,11 @@ app.post('/deleteReview/:id', (req, res) => {
 });
 
 // ADD REVIEWS??
+
+//         res.status(500).send('Internal Server Error');
+//       });
+//   });
+
 
 // DON'T PUT ANYTHING AFTER THIS!
 app.listen( port, () => console.log("Listening"));
