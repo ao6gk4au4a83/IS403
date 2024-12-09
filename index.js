@@ -43,7 +43,23 @@ app.get('/pricing', (req, res) => {
 
 // REVIEWS PAGE
 app.get('/reviews', (req, res) => {
-  res.render('reviews');
+  knex('users')
+    .join('reviews', 'users.email', '=', 'reviews.user_email')
+    .select(
+      'reviews.id',
+      'users.email',
+      'reviews.review_date',
+      'reviews.rating',
+      'reviews.comment',
+    )
+    .then(reviews => {
+      // Render the admin_reviews.ejs review record template and pass the data
+      res.render('reviews', { reviews });
+    })
+    .catch(error => {
+      console.error('Error querying database:', error);
+      res.status(500).send('Internal Server Error 6');
+    });
 });
 
 // Allow CSS **

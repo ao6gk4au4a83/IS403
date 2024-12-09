@@ -20,14 +20,11 @@
     <div class="navbar-brand">Haley Esthetics</div>
   </nav>
 <br><br><br><br><br><br>
-<!-- Admin Page Title -->
-  <h1 style="text-align: center">Administration Page</h1>
 <!-- Table Showing User Records -->
-  <h2 style="text-align: left;">Review Records</h2>
+  <h2 style="text-align: left;">Reviews</h2>
   <table>
     <thead>
       <tr>
-        <th>Email</th>
         <th>Review Date</th>
         <th>Rating</th>
         <th>Comment</th>
@@ -38,7 +35,6 @@
       <% if (reviews.length > 0) { %>
         <% reviews.forEach(row => { %>
           <tr>
-            <td><%= row.email %></td>
             <td><%= new Date(row.review_date).toLocaleDateString() %></td>
             <td><%= row.rating %></td>
             <td><%= row.comment %></td>
