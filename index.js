@@ -31,6 +31,21 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+// POLICY PAGE
+app.get('/policy', (req, res) => {
+  res.render('policy');
+});
+
+// PRICING PAGE
+app.get('/pricing', (req, res) => {
+  res.render('pricing');
+});
+
+// REVIEWS PAGE
+app.get('/reviews', (req, res) => {
+  res.render('reviews');
+});
+
 // Allow CSS **
 app.use(express.static(__dirname + '/views'));
 
@@ -290,11 +305,7 @@ app.post('/deleteReview/:id', (req, res) => {
     });
 });
 
-// ADD REVIEWS??
 
-//         res.status(500).send('Internal Server Error');
-//       });
-//   });
 
 
 // DON'T PUT ANYTHING AFTER THIS!
