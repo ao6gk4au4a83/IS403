@@ -20,7 +20,7 @@ body {
     align-items: center;
     z-index: 1000; /* Ensure it stays above other content */
     flex-direction: column; /* Stack links and brand vertically */
-}
+    
 
 .navbar-content {
     text-align: center;
@@ -30,6 +30,8 @@ body {
     font-size: 2.5em;
     font-weight: bold;
     font-family: Georgia, serif;
+    text-align: center;
+}
 }
 
 .navbar-links {
@@ -77,10 +79,14 @@ details {
 /* Background color blocks */
 #even {
     background-color: #faefe0;
+    width: 50%;
+    margin:auto;
 }
 
 #odd {
     background-color: #f7bcba;
+    width: 50%;
+    margin:auto;
 }
 
 /* Image Gallery */
