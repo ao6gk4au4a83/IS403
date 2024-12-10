@@ -1,12 +1,29 @@
 // Setup Stuff **
 const { rejects } = require("assert");
 let express = require("express");
-const { user } = require("os");
+// const { user } = require("os");
+let session = require('express-session');
+let bodyParser = require('body-parser');
 let app = express();
 let path = require("path");
 const port = process.env.PORT || 4500;
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Middleware to check if a user is logged in
+function isAuthenticated(req, res, next) {
+  if (req.session && req.session.user) {
+    return next();
+  }
+  res.redirect('/login');
+}
 
 // Get data from forms **
 app.use(express.urlencoded({extended: true}));
@@ -67,22 +84,44 @@ app.use(express.static(__dirname + '/views'));
 
 // ROUTES FOR LOGIN PAGE
 // Handle Login
-app.get('/login', (req, res) => {
-    const { email, password } = req.query;
+// app.get('/login', (req, res) => {
+//     const { email, password } = req.query;
 
-    // Query the database to find a user with the provided email and password
-    db.select().from('users').where({ email, password }).first()
-    .then(user => {
-        if (user) {
-            res.send('Login successful!');
-        } else {
-            res.send('Invalid email or password.');
-        }
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({ err });
-    });
+//     // Query the database to find a user with the provided email and password
+//     db.select().from('users').where({ email, password }).first()
+//     .then(user => {
+//         if (user) {
+//             res.send('Login successful!');
+//         } else {
+//             res.send('Invalid email or password.');
+//         }
+//     })
+//     .catch(err => {
+//         console.log(err);
+//         res.status(500).json({ err });
+//     });
+// });
+
+// Handle login submission
+app.post('/login', async (req, res) => {
+  const { loginEmail, loginPassword } = req.body;
+
+  try {
+    const user = await knex('users')
+      .select('*')
+      .where({ email: loginEmail, password: loginPassword }) // Simple check, no hashing
+      .first();
+
+    if (user) {
+      req.session.user = user; // Store user data in session
+      res.redirect('/admin');
+    } else {
+      res.send('Invalid credentials. <a href="/login">Try again</a>.');
+    }
+  } catch (error) {
+    console.error("Error querying the database:", error.message);
+    res.status(500).send("Internal Server Error.");
+  }
 });
 
 // Handle Sign-Up
@@ -147,7 +186,7 @@ app.get('/admin', (req, res) => {
 
 // EDIT USERS
 // Route to edit the individual users
-app.get('/editUser/:email', (req, res) => {
+app.get('/editUser/:email', isAuthenticated, (req, res) => {
     let email = req.params.email;
     // Query all info after fetching the user
     knex('users')
@@ -169,7 +208,7 @@ app.get('/editUser/:email', (req, res) => {
     });
   
 // Route to post edits data back to the database
-app.post('/editUser/:email', (req, res) => {
+app.post('/editUser/:email', isAuthenticated, (req, res) => {
     const email = req.params.email;
     // Access each value directly from req.body
     const first_name = req.body.first_name;
@@ -194,7 +233,7 @@ app.post('/editUser/:email', (req, res) => {
   
 // DELETE USERS
 // Route to delete user accounts
-app.post('/deleteUser/:email', (req, res) => {
+app.post('/deleteUser/:email', isAuthenticated, (req, res) => {
     const email = req.params.email;
     knex('users')
       .where('email', email)
@@ -210,12 +249,12 @@ app.post('/deleteUser/:email', (req, res) => {
 
 // ADD USERS
 // Route to add user account
-app.get('/addUser', (req, res) => {
+app.get('/addUser', isAuthenticated, (req, res) => {
   res.render('addUser')
 });  
 
 // Route to save new user to database
-app.post('/addUser', (req, res) => {
+app.post('/addUser', isAuthenticated, (req, res) => {
   const { email, password, first_name, last_name, phone } = req.body;
 
   // Use Knex transaction
@@ -241,7 +280,7 @@ app.post('/addUser', (req, res) => {
 
 // DISPLAY REVIEWS 
 // Route to display review record page
-app.get('/admin_reviews', (req, res) => {
+app.get('/admin_reviews', isAuthenticated, (req, res) => {
   knex('users')
     .join('reviews', 'users.email', '=', 'reviews.user_email')
     .select(
@@ -263,7 +302,7 @@ app.get('/admin_reviews', (req, res) => {
 
 // EDIT REVIEWS
 // Route to edit the individual reviews
-app.get('/editReview/:id', (req, res) => {
+app.get('/editReview/:id', isAuthenticated, (req, res) => {
   let id = req.params.id;
   // Query the users by email first
   knex('reviews')
@@ -283,7 +322,7 @@ app.get('/editReview/:id', (req, res) => {
 });
 
 // // Route to post data back to the database
-app.post('/editReview/:id', (req, res) => {
+app.post('/editReview/:id', isAuthenticated, (req, res) => {
   const id = req.params.id;
   // Access each value directly from req.body
   const user_email = req.body.user_email;
@@ -307,7 +346,7 @@ app.post('/editReview/:id', (req, res) => {
 
 // DELETE REVIEWS
 // Route to delete user accounts
-app.post('/deleteReview/:id', (req, res) => {
+app.post('/deleteReview/:id', isAuthenticated, (req, res) => {
   const id = req.params.id;
   knex('reviews')
     .where('id', id)
