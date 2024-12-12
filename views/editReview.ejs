@@ -194,7 +194,7 @@
   <h2 style="text-align: center;">Edit Reviews</h2>
   
   <!-- Editing Form -->
-  <form action="/editReview" method="POST">
+  <form action="/editReview/<%= review.user_email %>" method="POST" >
     <!-- Hidden ID Field -->
     <input type="hidden" name="id" value="<%= review.id %>">
 
