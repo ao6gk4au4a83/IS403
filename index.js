@@ -328,7 +328,7 @@ app.get('/editReview/:user_email', isAuthenticated, (req, res) => {
 // // Route to post data back to the database
 app.post('/editReview/:user_email', isAuthenticated, (req, res) => {
   // Access each value directly from req.body
-  const email = req.body.user_email;
+  const email = req.params.user_email;
   const comment = req.body.comment;
   const rating = req.body.rating; 
   // Update the user in the database
