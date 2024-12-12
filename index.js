@@ -151,7 +151,7 @@ app.get('/search', async (req, res) => {
 });
 
 // Route to display user record page
-app.get('/admin', (req, res) => {
+app.get('/admin', isAuthenticated, (req, res) => {
     knex('users')
       .join('login', 'users.email', '=', 'login.email')
       .select(
