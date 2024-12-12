@@ -221,18 +221,34 @@ app.post('/editUser/:email', isAuthenticated, (req, res) => {
   
 // DELETE USERS
 // Route to delete user accounts
-app.post('/deleteUser/:email', isAuthenticated, (req, res) => {
-    const email = req.params.email;
-    knex('users')
-      .where('email', email)
-      .del() // Deletes the record with the specified email
-      .then(() => {
-        res.redirect('/'); // Redirect to the user list after deletion
-      })
-      .catch(error => {
-        console.error('Error deleting user:', error);
-        res.status(500).send('Internal Server Error 5');
+app.post('/deleteUser/:email', isAuthenticated, async (req, res) => {
+  const email = req.params.email;
+
+  try {
+      // Use transaction to ensure both deletions succeed or fail together
+      await knex.transaction(async (trx) => {
+          // Delete from users table first (assuming foreign key constraint)
+          await trx('users')
+              .where('email', email)
+              .del();
+
+          // Then delete from login table
+          await trx('login')
+              .where('email', email)
+              .del();
+          
+          // delete from reviews
+          await trx('reviews')
+              .where('email', email)
+              .del();
       });
+
+      // Redirect after successful deletion
+      res.redirect('/');
+  } catch (error) {
+      console.error('Error deleting user:', error);
+      res.status(500).send('Failed to delete user account');
+  }
 });
 
 // ADD USERS
