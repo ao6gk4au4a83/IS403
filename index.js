@@ -176,6 +176,7 @@ app.get('/admin', isAuthenticated, (req, res) => {
 // Route to edit the individual users
 app.get('/editUser/:email', isAuthenticated, (req, res) => {
     let email = req.params.email;
+    console.log(email)
     // Query all info after fetching the user
     knex('users')
       .select('email', 'first_name', 'last_name', 'phone')
@@ -225,9 +226,13 @@ app.post('/deleteUser/:email', isAuthenticated, async (req, res) => {
   const email = req.params.email;
 
   try {
-      // Use transaction to ensure both deletions succeed or fail together
       await knex.transaction(async (trx) => {
-          // Delete from users table first (assuming foreign key constraint)
+          // First, delete all related reviews
+          await trx('reviews')
+              .where('user_email', email)
+              .del();
+
+          // Delete from users table
           await trx('users')
               .where('email', email)
               .del();
@@ -236,20 +241,15 @@ app.post('/deleteUser/:email', isAuthenticated, async (req, res) => {
           await trx('login')
               .where('email', email)
               .del();
-          
-          // delete from reviews
-          await trx('reviews')
-              .where('email', email)
-              .del();
       });
 
-      // Redirect after successful deletion
-      res.redirect('/');
+      res.redirect('/admin');
   } catch (error) {
       console.error('Error deleting user:', error);
       res.status(500).send('Failed to delete user account');
   }
 });
+
 
 // ADD USERS
 // Route to add user account
@@ -306,11 +306,11 @@ app.get('/admin_reviews', isAuthenticated, (req, res) => {
 
 // EDIT REVIEWS
 // Route to edit the individual reviews
-app.get('/editReview/:id', isAuthenticated, (req, res) => {
-  let id = req.params.id;
+app.get('/editReview/:user_email', isAuthenticated, (req, res) => {
+  let email = req.params.user_email;
   // Query the users by email first
   knex('reviews')
-    .where('id', id)
+    .where('user_email', email)
     .first() // takes the single object in the array into an object without the array
     .then(review => {
       if (!review) {
@@ -326,15 +326,14 @@ app.get('/editReview/:id', isAuthenticated, (req, res) => {
 });
 
 // // Route to post data back to the database
-app.post('/editReview/:id', isAuthenticated, (req, res) => {
-  const id = req.params.id;
+app.post('/editReview/:user_email', isAuthenticated, (req, res) => {
   // Access each value directly from req.body
-  const user_email = req.body.user_email;
+  const email = req.body.user_email;
   const comment = req.body.comment;
   const rating = req.body.rating; 
   // Update the user in the database
   knex('reviews')
-    .where('id', id)
+    .where('user_email', email)
     .update({
       comment: comment,
       rating: rating,
@@ -350,10 +349,10 @@ app.post('/editReview/:id', isAuthenticated, (req, res) => {
 
 // DELETE REVIEWS
 // Route to delete user accounts
-app.post('/deleteReview/:id', isAuthenticated, (req, res) => {
-  const id = req.params.id;
+app.post('/deleteReview/:user_email', isAuthenticated, (req, res) => {
+  const email = req.params.user_email;
   knex('reviews')
-    .where('id', id)
+    .where('user_email', email)
     .del() // Deletes the record with the specified email
     .then(() => {
       res.redirect('/admin_reviews'); // Redirect to the user list after deletion
