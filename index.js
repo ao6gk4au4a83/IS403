@@ -58,6 +58,11 @@ app.get('/pricing', (req, res) => {
   res.render('pricing');
 });
 
+// LOGIN PAGE
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
 // REVIEWS PAGE
 app.get('/reviews', (req, res) => {
   knex('users')
@@ -82,32 +87,14 @@ app.get('/reviews', (req, res) => {
 // Allow CSS **
 app.use(express.static(__dirname + '/views'));
 
-// ROUTES FOR LOGIN PAGE
-// Handle Login
-// app.get('/login', (req, res) => {
-//     const { email, password } = req.query;
-
-//     // Query the database to find a user with the provided email and password
-//     db.select().from('users').where({ email, password }).first()
-//     .then(user => {
-//         if (user) {
-//             res.send('Login successful!');
-//         } else {
-//             res.send('Invalid email or password.');
-//         }
-//     })
-//     .catch(err => {
-//         console.log(err);
-//         res.status(500).json({ err });
-//     });
-// });
 
 // Handle login submission
 app.post('/login', async (req, res) => {
   const { loginEmail, loginPassword } = req.body;
+  console.log(loginEmail, "Please work");
 
   try {
-    const user = await knex('users')
+    const user = await knex('login')
       .select('*')
       .where({ email: loginEmail, password: loginPassword }) // Simple check, no hashing
       .first();
@@ -120,7 +107,7 @@ app.post('/login', async (req, res) => {
     }
   } catch (error) {
     console.error("Error querying the database:", error.message);
-    res.status(500).send("Internal Server Error.");
+    res.status(500).send("Internal Server Error 0.5");
   }
 });
 
